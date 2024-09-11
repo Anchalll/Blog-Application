@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('./partials/head') %>
+        <title>Homepage</title>
+</head>
+
+<body>
+    <%- include('./partials/scripts') %>
+        <!-- nav bar -->
+        <%- include('./partials/header') %>
+            <div>Home page - Your Feed...</div>
+            <div class="container mt-3">
+                <div class="row row-cols-4">
+                    <% locals.blogs.forEach(blog=> {%>
+                        <div class="card col" style="width: 18rem;">
+                            <img class="card-img-top" src="<%= blog.coverImageURL %>">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= blog.title %>
+                                </h5>
+                                <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+            
+</body>
+
+</html>
