@@ -30,10 +30,10 @@ async function handlePostLogin(req, res, next) {
             token = await USER.matchPasswordAndGenerateToken(req.body.email, req.body.password)
             //set token in cookie and render home page
             res.cookie("sessionId", token)
-            res.redirect("/home")
+            return res.redirect("/home")
         }
         catch(error){
-            res.render("login",{message:"Incorrect email or password"})
+            return res.render("login",{message:"Incorrect email or password"})
         }
     }
     return res.render("login",{message :"Enter email / password" })
@@ -56,16 +56,23 @@ async function handlePostSignup(req, res, next) {
     }
     catch (err) {
         console.log(err)
-        res.json({ err: "some error occured" })
+        return res.json({ err: "some error occured" })
     }
 
 }
+
+function handleLogout(req,res){
+    res.clearCookie('sessionId')
+    return res.redirect("/login")
+}
+
 
 module.exports = {
     handleHomePage,
     handleLogin,
     handleSignup,
     handlePostSignup,
-    handlePostLogin
+    handlePostLogin,
+    handleLogout
 };
 

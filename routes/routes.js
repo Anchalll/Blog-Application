@@ -5,11 +5,13 @@ const {handleHomePage,
     handleSignup,
     handleLogin,
     handlePostSignup,
-    handlePostLogin} = require("../controllers/userController")
+    handlePostLogin,
+    handleLogout} = require("../controllers/userController")
 
 const {handleAddBlog,
         handlePostAddBlog,
-        handleBlogPage} = require("../controllers/blogController")
+        handleBlogPage,
+        handleComments} = require("../controllers/blogController")
 
 const {allowLoggedInUsersOnly} = require("../Middlewares/auth")
 
@@ -30,5 +32,6 @@ router.route("/login").get(handleLogin).post(handlePostLogin);
 router.get("/home",allowLoggedInUsersOnly,handleHomePage);
 router.route("/addblog").get(allowLoggedInUsersOnly,handleAddBlog).post(allowLoggedInUsersOnly,upload.single("coverImage"),handlePostAddBlog);
 router.get("/blog/:id",allowLoggedInUsersOnly,handleBlogPage);
-
+router.post("/blog/comment/:id",allowLoggedInUsersOnly,handleComments)
+router.get("/logout",allowLoggedInUsersOnly,handleLogout)
 module.exports = router;
